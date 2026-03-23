@@ -1,7 +1,7 @@
 # 🍫 Chocolate Sales Dashboard 2025
 
 [![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-yellow?style=flat-square)](https://powerbi.microsoft.com/)  
-[![Dataset](https://img.shields.io/badge/Dataset-CSV-blue?style=flat-square)](data/chocolate_sales.csv)  
+[![Dataset](https://img.shields.io/badge/Dataset-CSV-blue?style=flat-square)](chocolate_sales_2025_dataset.csv)  
 
 An interactive **Power BI** dashboard analyzing chocolate sales across countries, brands, and customer segments. Includes revenue KPIs, RFM (Recency, Frequency, Monetary) segmentation, and insights into sales channels and payment methods.
 
