@@ -1,119 +1,99 @@
 # 🍫 Chocolate Sales Dashboard – Power BI
 
-![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=power%20bi&logoColor=black)  
+![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=power%20bi&logoColor=black)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen?style=for-the-badge)
 
-An interactive **Power BI dashboard** that analyzes chocolate sales across brand, product type, country, sales channel, and payment method. It includes advanced segmentation with **RFM analysis by country** and **revenue‑based transaction segmentation**.
+An interactive **Power BI dashboard** that analyzes chocolate sales across **brand, product type, country, sales channel, and payment method**.
 
-📄 **PDF export**: [`Chocolate_sales_dashboard.pdf`](./Chocolate_sales_dashboard.pdf)
+This project showcases **data analysis, data modeling, DAX, and business intelligence skills**, including advanced techniques like **RFM segmentation** and **revenue-based transaction classification**.
+
+📄 **PDF Report**: [Chocolate_sales_dashboard.pdf](./Chocolate_sales_dashboard.pdf)
 
 ---
 
 ## 📊 Dashboard Preview
 
-*(Insert a screenshot – e.g., `images/Checolate_sales_dashboard_page-0001.jpg`)*
+![Dashboard](images/chocolate_dashboard.png)
 
-**Key Visuals**:  
-- KPIs (Revenue, Units Sold, Avg Price, Orders)  
-- Revenue by Brand & Product Type  
-- Sales over time  
-- Geographic map  
-- RFM segmentation table (Country scores & segments)  
-- Revenue segment breakdown (Lowest, Medium, Higher, Highest)  
-- Slicers for date, country, brand, channel
+> ⚠️ Make sure you upload your screenshot to: `images/chocolate_dashboard.png`
 
 ---
 
-## 🎯 Objective
+## 🎯 Business Objective
 
-Provide a clear, interactive view to:
-- Identify top brands, products, and sales channels.
-- Track sales trends over time.
-- Prioritize marketing efforts via RFM country segmentation.
-- Classify transaction value via revenue quartiles.
+The dashboard is designed to:
+
+- Identify **top-performing brands, products, and regions**
+- Track **sales trends over time**
+- Segment markets using **RFM analysis**
+- Classify transactions based on **revenue contribution**
+- Enable **data-driven decision-making**
 
 ---
 
 ## 📁 Dataset
 
-Sample chocolate sales data (CSV) with fields:
+The dataset contains chocolate sales transactions with the following structure:
 
 | Column | Description |
 |--------|-------------|
 | `Sale_ID`, `Date` | Transaction details |
-| `Brand`, `Product_Type` | Brand and product category |
-| `Country`, `Sales_Channel`, `Payment_Method` | Geographic and transactional context |
-| `Price_USD`, `Units_Sold`, `Revenue_USD` | Revenue metrics |
+| `Brand`, `Product_Type` | Product information |
+| `Country`, `Sales_Channel`, `Payment_Method` | Sales context |
+| `Price_USD`, `Units_Sold`, `Revenue_USD` | Key performance metrics |
 
 ---
 
-## 📐 Key DAX Measures
+## 📐 Key Features & Analysis
 
-### 1. RFM Analysis by Country (`RFM_Country`)
-Segments countries based on **Recency** (days since last sale), **Frequency** (transaction count), and **Monetary** (total revenue). Scores 1–4 (percentile‑based) combine into segments: *Champions*, *Loyal Customers*, *Potential Loyalist*, *At Risk*, *Needs Attention*.  
-*[Full code available in the repository]*
+### 🔹 RFM Segmentation (Country-Level)
 
-### 2. Revenue Segmentation (`Revenue_Segment`)
-Classifies each transaction into quartiles using the 25th, 50th, and 75th percentiles of `Revenue_USD`:
-- **Lowest** (≤ Q25)
-- **Medium** (Q25 < x ≤ Q50)
-- **Higher** (Q50 < x ≤ Q75)
-- **Highest** (> Q75)
+RFM analysis evaluates country performance using:
 
----
+- **Recency** → Days since last purchase  
+- **Frequency** → Number of transactions  
+- **Monetary** → Total revenue  
 
-## 🚀 Usage
+Countries are scored (1–4) and grouped into:
 
-1. **Clone** the repo:  
-   `git clone https://github.com/mamar/chocolate-sales-dashboard.git`
-2. Open `Chocolate_Sales_Dashboard.pbix` in Power BI Desktop.
-3. Update data source if needed to point to `data/chocolate_sales.csv`.
-4. Explore visuals, slicers, and drill‑downs.
-5. (Optional) View the exported PDF for a static report.
+- 🏆 Champions  
+- 💡 Loyal Customers  
+- 🌱 Potential Loyalists  
+- ⚠️ Needs Attention  
+- 🔻 At Risk  
+
+👉 Helps prioritize **marketing and retention strategies**
 
 ---
 
-## 📈 Key Insights (Sample)
+### 🔹 Revenue Segmentation
 
-- **RFM**: [e.g., “France is a ‘Champion’ country; Italy is ‘At Risk’.”]
-- **Revenue Segments**: Highest‑value transactions represent the top 25% of revenue.
-- **Top Brand**: Cadbury leads in revenue.
-- **Product**: Milk Chocolate is the most sold type.
-- **Channel**: Convenience store dominates transactions.
-- **Payment**: Cash is the most used method.
+Transactions are grouped into quartiles:
 
-*Update with actual findings from your dashboard.*
+- **Lowest (≤ Q25)**  
+- **Medium (Q25–Q50)**  
+- **Higher (Q50–Q75)**  
+- **Highest (> Q75)**  
 
----
-
-## 📂 Repository Structure
-*(Insert a screenshot – e.g., `images/Readme_structure.jpg`)*
-
+👉 Helps identify **high-value transactions**
 
 ---
 
-## 🔮 Future Enhancements
+## 📊 Key Insights
 
-- Forecasting & profit margin analysis  
-- Customer‑level RFM  
-- Power BI Service publishing  
-- Live data connection (SQL/API)
-
----
-
-## 🤝 Contributing
-
-Open issues or pull requests for improvements.
+- 📌 **Top Brand**: Cadbury leads in revenue  
+- 🍫 **Top Product**: Milk Chocolate dominates sales  
+- 🌍 **Top Country**: France classified as *Champion* (RFM)  
+- 🛒 **Top Channel**: Convenience stores lead transactions  
+- 💳 **Payment Method**: Cash is most commonly used  
 
 ---
 
-## 📄 License
+## 📐 Sample DAX Measures
 
-Educational/demo use only. Data is fictional.
+```DAX
+Total Revenue = SUM(Sales[Revenue_USD])
 
----
+Total Orders = COUNT(Sales[Sale_ID])
 
-## 📬 Contact
-
-Linkedin – [@mamar-habtamu-61818597](https://www.linkedin.com/in/mamar-habtamu-61818597/) 
-[GitHub Repository](https://github.com/mamar/chocolate-sales-dashboard)
+Average Price = AVERAGE(Sales[Price_USD])
