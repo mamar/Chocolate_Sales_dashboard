@@ -3,9 +3,6 @@
 [![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-yellow?style=flat-square)](https://powerbi.microsoft.com/)  
 [![Dataset](https://img.shields.io/badge/Dataset-CSV-blue?style=flat-square)](chocolate_sales_2025_dataset.csv)  
 
-An interactive **Power BI** dashboard analyzing chocolate sales across countries, brands, and customer segments. Includes revenue KPIs, RFM (Recency, Frequency, Monetary) segmentation, and insights into sales channels and payment methods.
-
-![Chocolate Dashboard](images/chocolate_dashboard.png)
 
 ---
 
@@ -16,9 +13,14 @@ An interactive **Power BI** dashboard analyzing chocolate sales across countries
 4. [Setup & Usage](#setup--usage)
 5. [RFM Logic](#rfm-logic-dax)
 6. [Dashboard Previews](#-dashboard-previews)
-7. [License](#license)
+7. [Author](#author)
+8. [License](#license)
 
 ---
+An interactive **Power BI** dashboard analyzing chocolate sales across countries, brands, and customer segments. Includes revenue KPIs, RFM (Recency, Frequency, Monetary) segmentation, and insights into sales channels and payment methods.
+
+![Chocolate Dashboard](images/chocolate_dashboard.png)
+
 
 ## 📝 Overview
 - Visualizes 2025 chocolate sales data.
@@ -76,7 +78,7 @@ An interactive **Power BI** dashboard analyzing chocolate sales across countries
 ## 🛠️ Setup & Usage
 1. Install **Power BI Desktop**.
 2. Open `Chocolate_Sales_Dashboard.pbix`.
-3. Update data source to `data/chocolate_sales.csv`.
+3. Update data source to `chocolate_sales.csv`.
 4. Explore dashboards and RFM insights.
 
 ---
@@ -103,6 +105,3 @@ ADDCOLUMNS(
     "RFM_Score_Text", FORMAT([R_Score],"0") & "-" & FORMAT([F_Score],"0") & "-" & FORMAT([M_Score],"0"),
     "Country_Segment", SWITCH(TRUE(), [R_Score]=4 && [F_Score]=4 && [M_Score]=4,"Champions",[R_Score]>=3 && [F_Score]>=3 && [M_Score]>=3,"Loyal Customers",[R_Score]>=2 && [F_Score]>=2 && [M_Score]>=2,"Potential Loyalist",[R_Score]=1 || [F_Score]=1 || [M_Score]=1,"At Risk","Needs Attention")
 )
-
-
-
