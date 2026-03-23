@@ -1,99 +1,108 @@
-# 🍫 Chocolate Sales Dashboard – Power BI
+# 🍫 Chocolate Sales Dashboard 2025
 
-![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=power%20bi&logoColor=black)
-![Status](https://img.shields.io/badge/Status-Completed-brightgreen?style=for-the-badge)
+[![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-yellow?style=flat-square)](https://powerbi.microsoft.com/)  
+[![Dataset](https://img.shields.io/badge/Dataset-CSV-blue?style=flat-square)](data/chocolate_sales.csv)  
 
-An interactive **Power BI dashboard** that analyzes chocolate sales across **brand, product type, country, sales channel, and payment method**.
+An interactive **Power BI** dashboard analyzing chocolate sales across countries, brands, and customer segments. Includes revenue KPIs, RFM (Recency, Frequency, Monetary) segmentation, and insights into sales channels and payment methods.
 
-This project showcases **data analysis, data modeling, DAX, and business intelligence skills**, including advanced techniques like **RFM segmentation** and **revenue-based transaction classification**.
-
-📄 **PDF Report**: [Chocolate_sales_dashboard.pdf](./Chocolate_sales_dashboard.pdf)
+![Chocolate Dashboard](data/images/chocolate_dashboard.png)
 
 ---
 
-## 📊 Dashboard Preview
-
-![Dashboard](images/chocolate_dashboard.png)
-
-> ⚠️ Make sure you upload your screenshot to: `images/chocolate_dashboard.png`
-
----
-
-## 🎯 Business Objective
-
-The dashboard is designed to:
-
-- Identify **top-performing brands, products, and regions**
-- Track **sales trends over time**
-- Segment markets using **RFM analysis**
-- Classify transactions based on **revenue contribution**
-- Enable **data-driven decision-making**
+## 📌 Table of Contents
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Dataset](#dataset)
+4. [Setup & Usage](#setup--usage)
+5. [RFM Logic](#rfm-logic-dax)
+6. [Dashboard Previews](#-dashboard-previews)
+7. [License](#license)
 
 ---
 
-## 📁 Dataset
+## 📝 Overview
+- Visualizes 2025 chocolate sales data.
+- Tracks revenue by **brand**, **product type**, and **country**.
+- Analyzes **sales channel performance** and **payment preferences**.
+- Segments countries using **RFM scoring**.
 
-The dataset contains chocolate sales transactions with the following structure:
+---
+
+## ✨ Features
+
+### 🔹 Key Metrics
+- Total revenue (example: `$119.45K`)
+- Channel & brand contribution
+
+### 🔹 Revenue Analysis
+- **Brands**: Toblerone, Mars, Lindt, Nestlé, Ferrero, Cadbury, Hershey  
+- **Product Types**: White Chocolate, Dark Chocolate, Chocolate Bar, Truffles, Milk Chocolate, Chocolate Box  
+- **Countries**: France, Canada, India, UK, Germany, Saudi Arabia, Italy, Australia, UAE, USA  
+- **Sales Channels**: Convenience, Specialty, Supermarket, Online
+
+### 🔹 Customer Segmentation (RFM)
+- **Recency**: Days since last purchase  
+- **Frequency**: Number of transactions  
+- **Monetary**: Total revenue per country  
+- **Segments**: *Champions*, *Loyal Customers*, *Potential Loyalist*, *At Risk*, *Needs Attention*
+
+### 🔹 Payment & Segment Insights
+- Segment vs Payment Method  
+- Segment vs Sales Channel  
+- Segment vs Brand
+
+---
+
+## 📂 Dataset
+`chocolate_sales.csv` contains:
 
 | Column | Description |
 |--------|-------------|
-| `Sale_ID`, `Date` | Transaction details |
-| `Brand`, `Product_Type` | Product information |
-| `Country`, `Sales_Channel`, `Payment_Method` | Sales context |
-| `Price_USD`, `Units_Sold`, `Revenue_USD` | Key performance metrics |
+| `Sale_ID` | Transaction ID |
+| `Date` | Transaction date |
+| `Brand` | Chocolate brand |
+| `Product_Type` | Category |
+| `Country` | Customer country |
+| `Sales_Channel` | Distribution channel |
+| `Payment_Method` | Cash, Card, Digital Wallet |
+| `Price_USD` | Unit price |
+| `Units_Sold` | Quantity |
+| `Revenue_USD` | Total revenue |
+
+> **Note:** Adjust DAX RFM calculations if your table name differs from `'chocolate_sales_2025_dataset'`.
 
 ---
 
-## 📐 Key Features & Analysis
-
-### 🔹 RFM Segmentation (Country-Level)
-
-RFM analysis evaluates country performance using:
-
-- **Recency** → Days since last purchase  
-- **Frequency** → Number of transactions  
-- **Monetary** → Total revenue  
-
-Countries are scored (1–4) and grouped into:
-
-- 🏆 Champions  
-- 💡 Loyal Customers  
-- 🌱 Potential Loyalists  
-- ⚠️ Needs Attention  
-- 🔻 At Risk  
-
-👉 Helps prioritize **marketing and retention strategies**
+## 🛠️ Setup & Usage
+1. Install **Power BI Desktop**.
+2. Open `Chocolate_Sales_Dashboard.pbix`.
+3. Update data source to `data/chocolate_sales.csv`.
+4. Explore dashboards and RFM insights.
 
 ---
 
-### 🔹 Revenue Segmentation
+## 🔢 RFM Logic (DAX)
+Calculates country-level **RFM scores** and assigns segments using percentile-based scoring:
 
-Transactions are grouped into quartiles:
+```dax
+RFM_Country = 
+VAR CountryTable =
+    SUMMARIZE(
+        'chocolate_sales_2025_dataset',
+        'chocolate_sales_2025_dataset'[Country],
+        "Recency", DATEDIFF(MAX('chocolate_sales_2025_dataset'[Date]), TODAY(), DAY),
+        "Frequency", COUNTROWS('chocolate_sales_2025_dataset'),
+        "Monetary", SUM('chocolate_sales_2025_dataset'[Revenue_USD])
+    )
+RETURN
+ADDCOLUMNS(
+    CountryTable,
+    "R_Score", SWITCH(TRUE(), [Recency]<=PERCENTILEX.INC(CountryTable,[Recency],0.25),4, [Recency]<=PERCENTILEX.INC(CountryTable,[Recency],0.50),3, [Recency]<=PERCENTILEX.INC(CountryTable,[Recency],0.75),2, 1),
+    "F_Score", SWITCH(TRUE(), [Frequency]>=PERCENTILEX.INC(CountryTable,[Frequency],0.75),4, [Frequency]>=PERCENTILEX.INC(CountryTable,[Frequency],0.50),3, [Frequency]>=PERCENTILEX.INC(CountryTable,[Frequency],0.25),2, 1),
+    "M_Score", SWITCH(TRUE(), [Monetary]>=PERCENTILEX.INC(CountryTable,[Monetary],0.75),4, [Monetary]>=PERCENTILEX.INC(CountryTable,[Monetary],0.50),3, [Monetary]>=PERCENTILEX.INC(CountryTable,[Monetary],0.25),2, 1),
+    "RFM_Score_Text", FORMAT([R_Score],"0") & "-" & FORMAT([F_Score],"0") & "-" & FORMAT([M_Score],"0"),
+    "Country_Segment", SWITCH(TRUE(), [R_Score]=4 && [F_Score]=4 && [M_Score]=4,"Champions",[R_Score]>=3 && [F_Score]>=3 && [M_Score]>=3,"Loyal Customers",[R_Score]>=2 && [F_Score]>=2 && [M_Score]>=2,"Potential Loyalist",[R_Score]=1 || [F_Score]=1 || [M_Score]=1,"At Risk","Needs Attention")
+)
 
-- **Lowest (≤ Q25)**  
-- **Medium (Q25–Q50)**  
-- **Higher (Q50–Q75)**  
-- **Highest (> Q75)**  
 
-👉 Helps identify **high-value transactions**
 
----
-
-## 📊 Key Insights
-
-- 📌 **Top Brand**: Cadbury leads in revenue  
-- 🍫 **Top Product**: Milk Chocolate dominates sales  
-- 🌍 **Top Country**: France classified as *Champion* (RFM)  
-- 🛒 **Top Channel**: Convenience stores lead transactions  
-- 💳 **Payment Method**: Cash is most commonly used  
-
----
-
-## 📐 Sample DAX Measures
-
-```DAX
-Total Revenue = SUM(Sales[Revenue_USD])
-
-Total Orders = COUNT(Sales[Sale_ID])
-
-Average Price = AVERAGE(Sales[Price_USD])
