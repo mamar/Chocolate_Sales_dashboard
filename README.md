@@ -5,7 +5,7 @@
 
 An interactive **Power BI** dashboard analyzing chocolate sales across countries, brands, and customer segments. Includes revenue KPIs, RFM (Recency, Frequency, Monetary) segmentation, and insights into sales channels and payment methods.
 
-![Chocolate Dashboard](data/images/chocolate_dashboard.png)
+![Chocolate Dashboard](images/chocolate_dashboard.png)
 
 ---
 
